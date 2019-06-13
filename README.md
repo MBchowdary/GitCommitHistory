@@ -24,4 +24,6 @@ Steps followed in creating application
 	c) Create App component which is a bridge between Module and dagger system
 9. Dependecy Injection for adapter
 10. Inject  HomeModule to activity
+11. We want to nake GitHub service Sigleton as If we have More activites we dont want more instances of them
+12. As dependant Hooked components are singleton we need to introduce scope
 

@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         homeComponent.inject(this);
         recyclerView.setAdapter(recyclerAdapter);
-        
+
         // RXjava
         gitHubAPIService.getCommitHistory().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
