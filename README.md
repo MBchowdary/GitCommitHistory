@@ -10,3 +10,4 @@ Steps followed in creating application
 	Retorfit, Rxjava, and GSON convertor
 6. We will use dagger at the End, For now main goal is get data from end point and display it to user.
 	a.) Added Retofit and Gson Instances to the activity.
+	b.) Create POJO classes
