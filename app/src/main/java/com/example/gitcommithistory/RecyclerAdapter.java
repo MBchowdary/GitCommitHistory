@@ -1,5 +1,6 @@
 package com.example.gitcommithistory;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RViewH
     @Override
     public void onBindViewHolder(@NonNull RViewHolder holder, int position) {
         // Binding Text view with data sets
+        Log.d("ABC", "Data set "+ dataset.get(position));
         holder.author.setText(dataset.get(position));
         holder.commitmsg.setText(dataset.get(position));
         holder.commitid.setText(dataset.get(position));
