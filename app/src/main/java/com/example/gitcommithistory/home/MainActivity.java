@@ -60,12 +60,9 @@ public class MainActivity extends AppCompatActivity {
                 .appComponent((((App)getApplication()).getAppComponent()))
                 .build();
 
-        recyclerAdapter = homeComponent.getRecyclerAdapter();
+        homeComponent.inject(this);
         recyclerView.setAdapter(recyclerAdapter);
         
-        /*GitHubAPI gitHubAPI = retrofit.create(GitHubAPI.class);
-        Observable<List<GitHubCommitModel>> observableCommitList = gitHubAPI.getRepoFromRemote();*/
-
         // RXjava
         gitHubAPIService.getCommitHistory().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
