@@ -1,40 +1,33 @@
 package com.example.gitcommithistory.home;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.util.Log;
-
 import com.example.gitcommithistory.R;
 import com.example.gitcommithistory.RecyclerAdapter;
-import com.example.gitcommithistory.githubapi.GitHubAPI;
 import com.example.gitcommithistory.githubapi.GitHubAPIService;
 import com.example.gitcommithistory.models.DataClass;
 import com.example.gitcommithistory.models.GitHubCommitModel;
 import com.example.gitcommithistory.root.App;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
+import javax.inject.Inject;
+
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "GIT";
-
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
+    @Inject
     RecyclerAdapter recyclerAdapter;
     List<DataClass> commits;
 
@@ -55,16 +48,19 @@ public class MainActivity extends AppCompatActivity {
         GitHubAPIService gitHubAPIService = app.getGitHubAPIService();
 
         HomeComponent homeComponent = DaggerHomeComponent
-                .builder()
-                .recyclerAdapterModule(new RecyclerAdapterModule(commits))
-                .appComponent((((App)getApplication()).getAppComponent()))
-                .build();
+        .builder()
+        .recyclerAdapterModule(new RecyclerAdapterModule(commits))
+        .appComponent((((App)getApplication()).getAppComponent()))
+        .build();
 
         homeComponent.inject(this);
+
         recyclerView.setAdapter(recyclerAdapter);
 
+
+
         // RXjava
-        gitHubAPIService.getCommitHistory().subscribeOn(Schedulers.io())
+                gitHubAPIService.getCommitHistory().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<GitHubCommitModel>>() {
                     @Override
@@ -74,10 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(List<GitHubCommitModel> gitHubCommitModels) {
+                        //for(GitHubCommitModel commit: observableCommitList)
                         for (GitHubCommitModel gitcommits : gitHubCommitModels) {
-                            Log.d(TAG, "onNext: "+ gitcommits.getSha());
-                            Log.d(TAG, "onNext: "+ gitcommits.getCommit().getMessage());
-                            Log.d(TAG, "onNext: "+ gitcommits.getCommit().getCommitter().getName());
                             DataClass dataClass = new DataClass();
                             dataClass.setAuthor(gitcommits.getCommit().getCommitter().getName());
                             dataClass.setCommitid(gitcommits.getSha());

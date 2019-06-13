@@ -26,4 +26,6 @@ Steps followed in creating application
 10. Inject  HomeModule to activity
 11. We want to nake GitHub service Sigleton as If we have More activites we dont want more instances of them
 12. As dependant Hooked components are singleton we need to introduce scope
+13. Scope Annotation creation [Scope to be built with apk] 
+14. Componets with app socpe will be alive when app is and Activy scope will be destroyed with activity
 

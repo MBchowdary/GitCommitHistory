@@ -1,11 +1,9 @@
 package com.example.gitcommithistory.root;
 
+import com.example.gitcommithistory.di.AppScope;
 import com.example.gitcommithistory.githubapi.GitHubAPIService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import javax.inject.Scope;
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -18,7 +16,7 @@ public class AppModule {
 
     private static final String BaseURL = "https://api.github.com";
     @Provides
-    @Singleton
+    @AppScope
     Gson providesGson(){
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -26,7 +24,7 @@ public class AppModule {
         return gson;
     }
     @Provides
-    @Singleton
+    @AppScope
     Retrofit providesRetrofit(Gson gson){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BaseURL)
@@ -36,7 +34,7 @@ public class AppModule {
         return retrofit;
     }
     @Provides
-    @Singleton
+    @AppScope
     GitHubAPIService providesGitHubAPIService(Gson gson, Retrofit retrofit) {
         GitHubAPIService gitHubAPIService = new GitHubAPIService(gson, retrofit);
         return gitHubAPIService;

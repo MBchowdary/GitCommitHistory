@@ -1,7 +1,7 @@
 package com.example.gitcommithistory.home;
 
-
 import com.example.gitcommithistory.RecyclerAdapter;
+import com.example.gitcommithistory.di.ActivityScope;
 import com.example.gitcommithistory.models.DataClass;
 
 import java.util.List;
@@ -19,6 +19,7 @@ public class RecyclerAdapterModule {
     }
 
     @Provides
+    @ActivityScope
     RecyclerAdapter providesRecyclerAdapter(){
         RecyclerAdapter recyclerAdapter = new RecyclerAdapter(dataset);
         return recyclerAdapter;

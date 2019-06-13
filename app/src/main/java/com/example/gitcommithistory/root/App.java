@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.example.gitcommithistory.githubapi.GitHubAPIService;
 
-
 public class App extends Application {
     private static final String TAG = "App";
 
