@@ -49,13 +49,20 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         commits = new ArrayList<>();
-        recyclerAdapter = new RecyclerAdapter(commits);
-        recyclerView.setAdapter(recyclerAdapter);
 
         // As API calls are used application wide moved Network Module to App
         App app = (App)getApplication();
         GitHubAPIService gitHubAPIService = app.getGitHubAPIService();
 
+        HomeComponent homeComponent = DaggerHomeComponent
+                .builder()
+                .recyclerAdapterModule(new RecyclerAdapterModule(commits))
+                .appComponent((((App)getApplication()).getAppComponent()))
+                .build();
+
+        recyclerAdapter = homeComponent.getRecyclerAdapter();
+        recyclerView.setAdapter(recyclerAdapter);
+        
         /*GitHubAPI gitHubAPI = retrofit.create(GitHubAPI.class);
         Observable<List<GitHubCommitModel>> observableCommitList = gitHubAPI.getRepoFromRemote();*/
 

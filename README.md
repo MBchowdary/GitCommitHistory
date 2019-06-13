@@ -20,5 +20,7 @@ Steps followed in creating application
 	b)Initial Refactoring
 8. Introduce Dagger 
 	a) Add Dagger libraries
-	b)Create An App module which will provide App level dependecies such as Retrofit and Gson
+	b) Create An App module which will provide App level dependecies such as Retrofit and Gson
+	c) Create App component which is a bridge between Module and dagger system
+9.Dependecy Injection for adapter
 
