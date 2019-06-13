@@ -52,19 +52,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerAdapter = new RecyclerAdapter(commits);
         recyclerView.setAdapter(recyclerAdapter);
 
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
-
-        Retrofit retrofit = new  Retrofit.Builder()
-                .baseUrl("https://api.github.com")
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        // As Network Module is used application wide
+        // As API calls are used application wide moved Network Module to App
         App app = (App)getApplication();
-        GitHubAPIService gitHubAPIService = app.getGitHubAPIService(gson,retrofit);
+        GitHubAPIService gitHubAPIService = app.getGitHubAPIService();
 
         /*GitHubAPI gitHubAPI = retrofit.create(GitHubAPI.class);
         Observable<List<GitHubCommitModel>> observableCommitList = gitHubAPI.getRepoFromRemote();*/

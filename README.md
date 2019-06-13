@@ -18,4 +18,7 @@ Steps followed in creating application
 7. Clean up MainActivy and Refactor code
 	a) To access API application wide Create App class
 	b)Initial Refactoring
+8. Introduce Dagger 
+	a) Add Dagger libraries
+	b)Create An App module which will provide App level dependecies such as Retrofit and Gson
 

@@ -3,9 +3,6 @@ package com.example.gitcommithistory.root;
 import android.app.Application;
 
 import com.example.gitcommithistory.githubapi.GitHubAPIService;
-import com.google.gson.Gson;
-
-import retrofit2.Retrofit;
 
 
 public class App extends Application {
@@ -13,14 +10,22 @@ public class App extends Application {
 
     GitHubAPIService gitHubAPIService;
 
+    public AppComponent getAppComponent() {
+        return appComponent;
+    }
+
+    AppComponent appComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        appComponent = DaggerAppComponent
+                .builder()
+                .appModule(new AppModule())
+                .build();
     }
 
-    public GitHubAPIService getGitHubAPIService(Gson gson, Retrofit retrofit) {
-        gitHubAPIService =  getGitHubAPIService(gson, retrofit);
-        return gitHubAPIService;
+    public GitHubAPIService getGitHubAPIService() {
+       return appComponent.getGitHubAPIService();
     }
 }
