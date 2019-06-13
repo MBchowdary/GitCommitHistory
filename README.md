@@ -12,3 +12,5 @@ Steps followed in creating application
 	a.) Added Retofit and Gson Instances to the activity.
 	b.) Create POJO classes
 	c.) Interfcae For API (FOr Fetch request)
+	d.) Formulating API call through RX java printing out in the form of Logs, no update to View yet.
+	e.) Added Internet permission
