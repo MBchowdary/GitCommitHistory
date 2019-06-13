@@ -1,4 +1,4 @@
-package com.example.gitcommithistory;
+package com.example.gitcommithistory.home;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,9 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.gitcommithistory.R;
+import com.example.gitcommithistory.RecyclerAdapter;
 import com.example.gitcommithistory.githubapi.GitHubAPI;
+import com.example.gitcommithistory.githubapi.GitHubAPIService;
 import com.example.gitcommithistory.models.DataClass;
 import com.example.gitcommithistory.models.GitHubCommitModel;
+import com.example.gitcommithistory.root.App;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -53,16 +57,20 @@ public class MainActivity extends AppCompatActivity {
                 .create();
 
         Retrofit retrofit = new  Retrofit.Builder()
-                .baseUrl("https://api.github.com/")
+                .baseUrl("https://api.github.com")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        GitHubAPI gitHubAPI = retrofit.create(GitHubAPI.class);
-        Observable<List<GitHubCommitModel>> observableCommitList = gitHubAPI.getRepoFromRemote();
+        // As Network Module is used application wide
+        App app = (App)getApplication();
+        GitHubAPIService gitHubAPIService = app.getGitHubAPIService(gson,retrofit);
+
+        /*GitHubAPI gitHubAPI = retrofit.create(GitHubAPI.class);
+        Observable<List<GitHubCommitModel>> observableCommitList = gitHubAPI.getRepoFromRemote();*/
 
         // RXjava
-        observableCommitList.subscribeOn(Schedulers.io())
+        gitHubAPIService.getCommitHistory().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<GitHubCommitModel>>() {
                     @Override
