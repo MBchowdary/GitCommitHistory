@@ -8,3 +8,5 @@ Steps followed in creating application
 4. We will populate recycler view with some dummy data -> To make sure UI work is done
 5. We will get data from "https://api.github.com/repos/mojombo/grit/commits" and add depedant libraraies
 	Retorfit, Rxjava, and GSON convertor
+6. We will use dagger at the End, For now main goal is get data from end point and display it to user.
+	a.) Added Retofit and Gson Instances to the activity.

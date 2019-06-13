@@ -6,8 +6,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +35,15 @@ public class MainActivity extends AppCompatActivity {
         commits = new ArrayList<>();
         recyclerAdapter = new RecyclerAdapter(commits);
         recyclerView.setAdapter(recyclerAdapter);
+
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
+        Retrofit retrofit = new  Retrofit.Builder()
+                .baseUrl("https://api.github.com/repos/mojombo/grit/commits")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
 
         commits.add("Git");
         commits.add("Git Lab");
