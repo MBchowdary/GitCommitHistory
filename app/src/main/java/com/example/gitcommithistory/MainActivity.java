@@ -22,6 +22,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecyclerAdapter recyclerAdapter;
-    List<String> commits;
+    List<DataClass> commits;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
                 .create();
 
         Retrofit retrofit = new  Retrofit.Builder()
-                .baseUrl("https://api.github.com")
+                .baseUrl("https://api.github.com/")
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -71,11 +73,15 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onNext(List<GitHubCommitModel> gitHubCommitModels) {
                         for (GitHubCommitModel gitcommits : gitHubCommitModels) {
-
                             Log.d(TAG, "onNext: "+ gitcommits.getSha());
                             Log.d(TAG, "onNext: "+ gitcommits.getCommit().getMessage());
                             Log.d(TAG, "onNext: "+ gitcommits.getCommit().getCommitter().getName());
-
+                            DataClass dataClass = new DataClass();
+                            dataClass.setAuthor(gitcommits.getCommit().getCommitter().getName());
+                            dataClass.setCommitid(gitcommits.getSha());
+                            dataClass.setMessage(gitcommits.getCommit().getMessage());
+                            commits.add(dataClass);
+                            recyclerAdapter.notifyDataSetChanged();
                         }
                     }
 
@@ -89,12 +95,5 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
-
-
-
-        commits.add("Git");
-        commits.add("Git Lab");
-        commits.add("BitBucket");
-        recyclerAdapter.notifyDataSetChanged();
     }
 }

@@ -14,3 +14,4 @@ Steps followed in creating application
 	c.) Interfcae For API (FOr Fetch request)
 	d.) Formulating API call through RX java printing out in the form of Logs, no update to View yet.
 	e.) Added Internet permission
+	f.) Disply the output by uisng data from API, For this rplace String with "Data Class" we created in Model 

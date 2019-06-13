@@ -9,15 +9,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.gitcommithistory.models.DataClass;
+
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RViewHolder> {
 
     //data set
     // For testing purpose we will assume data is of type sting
-    List<String> dataset;
+    List<DataClass> dataset;
 
-    public RecyclerAdapter(List<String> dataset) {
+    public RecyclerAdapter(List<DataClass> dataset) {
         this.dataset = dataset;
     }
 
@@ -32,10 +34,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RViewH
     @Override
     public void onBindViewHolder(@NonNull RViewHolder holder, int position) {
         // Binding Text view with data sets
-        Log.d("ABC", "Data set "+ dataset.get(position));
-        holder.author.setText(dataset.get(position));
-        holder.commitmsg.setText(dataset.get(position));
-        holder.commitid.setText(dataset.get(position));
+        holder.author.setText(dataset.get(position).getAuthor());
+        holder.commitmsg.setText(dataset.get(position).getMessage());
+        holder.commitid.setText(dataset.get(position).getCommitid());
     }
 
     @Override
